@@ -1,3 +1,5 @@
+import csv
+from datetime import date
 def addtrade():
         ticker = ""
         conf = ""
@@ -17,7 +19,11 @@ def addtrade():
                 price = currentprice
         countshares = input('''how many shares did you purchase?
 ''')
-        tcost = '$'+str(int(price)*int(countshares))
+        pdate = input("""what date was the trade completed?(mm/dd/yy) press enter to use today's date 
+""")
+        if pdate == '':
+                pdate = date.today().strftime('%m/%d/%y')
+        tcost = '$'+str(float(price)*float(countshares))
         if len(ticker) == 1:
                 tspaces = "      "
         elif len(ticker) == 2:
@@ -35,9 +41,14 @@ Ticker | Price | Shares | Total Cost
 + ticker + tspaces + "|  " + str(price) + "   |   " + countshares + "   |    " + str(tcost))
         fconf = input('''does this look right? y/n
 ''')
-#       with open(r'idscores.csv', 'a') as f:
-#               writer = csv.writer(f)
-#               writer.writerow(keyandscores)
+        if fconf == 'y':
+                tradeinfo = [pdate,'$'+ticker,countshares,'$'+price,tcost]
+                with open(r'transactions.csv', 'a') as f:
+                     writer = csv.writer(f)
+                     writer.writerow(tradeinfo)
+                print('Trade Recorded! Exiting...')
+        else:
+	        print('Ok! Exiting without recording trade...')
 def viewtrades():
 	print('viewtrades has been called')
 def viewportfolio():
