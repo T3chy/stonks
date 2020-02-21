@@ -1,25 +1,10 @@
-from yahoo_fin import stock_info as si 
+#from yahoo_fin import stock_info as si 
+import actionz as a
 import csv
-def add(ticker):
-	while ticker == "":
-		ticker = input("ticker?")
-	currentprice = si.get_live_price(ticker)
-	print("the current price for " + ticker + " is " +str(currentprice))
-	while conf == "":
-		conf = input("does this look right? y/n")
-	if conf == "n":
-		price = input("please input the price you bought at")
-	else:
-		price = currentprice
-	countshares = input("how many shares did you purchase?")
-	print(""
-Ticker | Price | Shares
-----------------------"" 
-+ ticker + " | " + price + " | " countshares)
 #	with open(r'idscores.csv', 'a') as f:
 #		writer = csv.writer(f)
 #		writer.writerow(keyandscores)
-choice = ""
+choice = " "
 while 'TRUE' == 'TRUE':
 	choice = input("""
 Welcome to Elam's Portfolio! Please select a function :)
@@ -33,5 +18,13 @@ Your Selection:""")
 		break
 	if choice == "viewportfolio":
 		break
-if choice == "add"
-
+	if choice == "info":
+		break
+if choice == "add":
+	a.addtrade()
+elif choice == "viewtrades":
+	a.viewtrades()
+elif choice == "viewportfolio":
+	a.viewportfolio()
+elif choice == "info":
+	a.info()
