@@ -1,6 +1,7 @@
 import csv
 from datetime import date
 from yahoo_fin import stock_info as si
+from yahoo_fin.stock_info import get_analysts_info
 def addtrade():
         ticker = ""
         conf = ""
@@ -55,10 +56,21 @@ Ticker | Price | Shares | Total Cost
                 print('Trade Recorded! Exiting...')
         else:
 	        print('Ok! Exiting without recording trade...')
+        again = input('add another trade? y/n')
+        while again == 'y':
+                addtrade()
+                again = input('add another trade? y/n')
+                if again == 'n':
+                      break
 def viewtrades():
-	print('viewtrades has been called')
-def viewportfolio():
-	print('viewportfolio has been called')
-def info():
-	print('info has been called')
+        print('viewtrades has been called')
+        #lmao actually write this 
 
+
+def viewportfolio():
+        print('viewportfolio has been called')
+	#lmao actually write this
+def info():
+        print('info has been called')
+        ticker = input('ticker?')
+        print(get_analysts_info(ticker)) 
