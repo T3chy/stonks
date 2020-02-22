@@ -62,6 +62,20 @@ Ticker | Price | Shares | Total Cost
                 again = input('add another trade? y/n')
                 if again == 'n':
                       break
+        print('updating portfolio...')
+        r = csv.reader(open(r'portfolio.csv'))
+        lines = list(r)
+        if ticker in lines:
+                for i in sum(1 for row in lines):
+                      if i == ticker:
+                           lines[i][1] = p[i][1] + tcost
+                           lines[i][2] = p[i][2] + countshares
+                           writer = csv.writer(open('portfolio.csv', 'w'))
+                           writer.writerows(lines)
+        else:
+               tradeinfo = [ticker,tcost,countshares]
+               writer = csv.writer(open('portfolio.csv', 'w'))
+               writer.writerow(tradeinfo)
 def viewtrades():
         print('viewtrades has been called')
         with open("transactions.csv") as trans:
