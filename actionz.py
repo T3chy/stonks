@@ -1,5 +1,6 @@
 import csv
 from datetime import date
+from yahoo_fin import stock_info as si
 def addtrade():
         ticker = ""
         conf = ""
@@ -7,7 +8,7 @@ def addtrade():
         while ticker == "":
                 ticker = input('''ticker?
 ''').strip('$')
-        currentprice = 1 #si.get_live_price(ticker)
+        currentprice = si.get_live_price(ticker)
         print("the current price for " + ticker + " is $" +str(currentprice))
         while conf == "":
                 conf = input('''does this look right? y/n
@@ -42,7 +43,12 @@ Ticker | Price | Shares | Total Cost
         fconf = input('''does this look right? y/n
 ''')
         if fconf == 'y':
-                tradeinfo = [pdate,'$'+ticker,countshares,'$'+price,tcost]
+                pdate = str(pdate)
+                ticker = '$'+str(ticker)
+                countshares = str(countshares)
+                price = '$'+str(price)
+                tcost = str(tcost)
+                tradeinfo = [pdate,ticker,countshares,price,tcost]
                 with open(r'transactions.csv', 'a') as f:
                      writer = csv.writer(f)
                      writer.writerow(tradeinfo)
