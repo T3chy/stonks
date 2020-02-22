@@ -9,7 +9,7 @@ def addtrade():
         while ticker == "":
                 ticker = input('''ticker?
 ''').strip('$')
-        currentprice = si.get_live_price(ticker)
+        currentprice = round(si.get_live_price(ticker),2)
         print("the current price for " + ticker + " is $" +str(currentprice))
         while conf == "":
                 conf = input('''does this look right? y/n
@@ -64,8 +64,10 @@ Ticker | Price | Shares | Total Cost
                       break
 def viewtrades():
         print('viewtrades has been called')
-        #lmao actually write this 
-
+        with open("transactions.csv") as trans:
+                reader = csv.reader(trans)
+                for row in reader:
+                        print(" ".join(row))
 
 def viewportfolio():
         print('viewportfolio has been called')
