@@ -9,16 +9,22 @@ def addtrade():
         while ticker == "":
                 ticker = input('''ticker?
 ''').strip('$')
-        currentprice = round(si.get_live_price(ticker),2)
-        print("the current price for " + ticker + " is $" +str(currentprice))
-        while conf == "":
-                conf = input('''does this look right? y/n
-''')
-        if conf == "n":
+        try:
+                currentprice = round(si.get_live_price(ticker),2)
+        except Exception as e:
+                print('getting live price failed')
                 price = input('''please input the price you bought at
 ''').strip('$')
-        else:
-                price = currentprice
+        else: 
+                print("the current price for " + ticker + " is $" +str(currentprice))
+                while conf == "":
+                        conf = input('''does this look right? y/n
+''')
+                if conf == "n":
+                        price = input('''please input the price you bought at
+''').strip('$')
+                else:
+                        price = currentprice
         countshares = input('''how many shares did you purchase?
 ''')
         pdate = input("""what date was the trade completed?(mm/dd/yy) press enter to use today's date 
@@ -62,6 +68,7 @@ Ticker | Price | Shares | Total Cost
                 again = input('add another trade? y/n')
                 if again == 'n':
                       break
+#make this not enter if does this look right says no 
         print('updating portfolio...')
         r = csv.reader(open(r'portfolio.csv'))
         lines = list(r)
@@ -74,7 +81,7 @@ Ticker | Price | Shares | Total Cost
                            writer.writerows(lines)
         else:
                tradeinfo = [ticker,tcost,countshares]
-               writer = csv.writer(open('portfolio.csv', 'w'))
+               writer = csv.writer(open('portfolio.csv', 'a'))
                writer.writerow(tradeinfo)
 def viewtrades():
         print('viewtrades has been called')
@@ -85,7 +92,10 @@ def viewtrades():
 
 def viewportfolio():
         print('viewportfolio has been called')
-	#lmao actually write this
+        with open("portfolio.csv") as pp:
+                reader = csv.reader(pp)
+                for row in reader:
+                        print(" ".join(row))
 def info():
         print('info has been called')
         ticker = input('ticker?')
