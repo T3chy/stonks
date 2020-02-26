@@ -96,6 +96,22 @@ def viewportfolio():
                 reader = csv.reader(pp)
                 for row in reader:
                         print(" ".join(row))
+        conf = input("view unrealized gains/losses on a position? y/n")
+        if conf == 'y':
+                ticker = input("ticker? input 'total' for all unrealized gains/losses").strip('$')
+                with open('portfolio.csv') as tt:
+                        reader = csv.reader(tt)
+                        for row in reader:
+                              if row == " ":
+                                    continue
+                              print(row[0])
+                              if row[0] == '$'+ticker:
+                                    ugl = float((float(float(si.get_live_price(row[0].strip('$')))*float(row[2].strip('$'))))-float(row[1].strip('$')))
+                                    if ugl < 0:
+                                           gl = 'losses'
+                                    elif ugl > 0:
+                                           gl = 'gains'
+                                    print('Unrealized '+gl+' for '+row[0]+' are '+'$'+str(round(abs(ugl),2)))
 def info():
         print('info has been called')
         ticker = input('ticker?')
